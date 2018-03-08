@@ -30,9 +30,9 @@ App({
 #### contacts 通讯录事件总线
 
 
-|类型|事件名| 事件  |          参数         |备注|
-|-------|:---------------------:|
-|接收|点击联系人|contactsUpdateGroups | contacts    |contacts 是一个contact数组，程序将会自动对contact进行pinyin分组|
-|发送|更新联系人列表|contactsClicContact|contact|contact 联系人对象|
-
+|类型|事件名|事件|参数|备注|  
+|:---------------------:|  
+|接收|点击联系人|contactsUpdateGroups | contacts|contacts 是一个contact数组，程序将会自动对contact进行pinyin分组|  
+|发送|更新联系人列表|contactsClicContact|contact|contact 联系人对象|  
+  
 
