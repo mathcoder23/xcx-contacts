@@ -409,6 +409,21 @@ const py = {
         var oResult = py.get(word);
         return oResult.l;
     },
+    /**
+     * 获取首个字母，大写返回，如果不是字母返回#
+     */
+    getIndex(word){
+      var result = '#'
+      var oResult = py.get(word)
+      var p = oResult.p;
+      if(p && p.length>0){
+        var temp = p.substr(0, 1)//获取首个字符
+        if ((temp >= 'a' && temp <= 'z') || (temp >= 'A' && temp <= 'Z')){
+          result = temp//判断是字母，作为返回结果
+        }
+      }
+      return result.toUpperCase()
+    },
     get : function(words){
         words = words || "";
         var sWord, oResult,
@@ -457,6 +472,4 @@ const py = {
     }
 };
 
-module.exports = {
-    py: py
-}
+module.exports = py

@@ -1,6 +1,6 @@
 
 var eventBus = require('pages/contacts/EventBus.js') 
-
+var businit = require('bus-contacts.js') 
 //app.js
 App({
   globalData: {

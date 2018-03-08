@@ -1,5 +1,5 @@
-var util = require('utils/utils.js');
-var controller = require('controller.js');
+var utils = require('utils/utils.js');
+
 var app = getApp()
 var bus = app.globalData.bus
 Page({
@@ -10,24 +10,27 @@ Page({
     scrollIntoView: 'A',
     // 导航字母
     letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
-    'U', 'V', 'W', 'X', 'Y', 'Z','#'],
-    groups: [{
-        groupName: 'A',
-        users: [
-          {
-            name: '阿码',
-            phone:'1890818181'
-          }
-        ]
-      }
+    'U', 'V', 'W', 'X', 'Y', 'Z'],
+    groups: [
     ]
   },
   onLoad:function(options){
-    console.log('a')
-    //更新列表数据
-    bus.on('contactsUpdateGroups',(groups)=>{
-      this.setData({ ConstGroups: groups })
-      this.setData({ groups: groups})
+    //请求更新组列表数据
+    bus.emit('contactsUpdateGroups').then(groups=>{
+      if(groups){
+        this.setData({ ConstGroups: groups })
+        this.setData({ groups: groups })
+      }
+     
+    })
+    //请求更新联系人组数据
+    bus.emit('contactsUpdateContacts').then(contacts => {
+      //contacts 转换为groups
+      if (contacts){
+        let groups = utils.contactsToGroups(contacts)
+        this.setData({ ConstGroups: groups })
+        this.setData({ groups: groups })
+      }
     })
     const res = wx.getSystemInfoSync(),
           letters = this.data.letters;
@@ -61,6 +64,7 @@ Page({
     })
   },
   tabLetter(e) {
+    console.log(e)
     const index = e.currentTarget.dataset.index;
     this.setData({
       selected: index,
@@ -105,7 +109,7 @@ Page({
     this.cleanAcitvedStatus();
   },
   search(){
-    this.data.groups = util.localSearch(this.data.ConstGroups, {
+    this.data.groups = utils.localSearch(this.data.ConstGroups, {
       name: this.data.searchText
     })
     this.setData({
@@ -145,7 +149,7 @@ Page({
     let user = e.currentTarget.dataset.user
     console.log(user)
     wx.showActionSheet({
-      itemList: ['编辑', '添加联系人'],
+      itemList: ['编辑', '添加到手机通讯录'],
       success: function (res) {
         if (res.tapIndex == 0) {
           // 编辑联系人

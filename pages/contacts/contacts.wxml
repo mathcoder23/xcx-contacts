@@ -1,16 +1,17 @@
 
 <view class="wxSearch-section">
   <view class="wxSearch-pancel">
-  <button class="wxSearch-button" bindtap="clickAddUser" size="mini" plain="true">添加</button>
+ 
     <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" class="wxSearch-input" placeholder="搜索" />
-    <button class="wxSearch-button" bindtap="wxSearchFn" size="mini" plain="true">搜索</button>
-    
+    <!-- <button class="wxSearch-button" bindtap="wxSearchFn" size="mini" plain="true">搜索</button> -->
+     <button class="wxSearch-button" bindtap="clickAddUser" size="mini" plain="true">添加</button>
   </view>
 </view>
 
 <view class="flex box box-lr">
 
   <scroll-view class="flex groups box box-tb" scroll-y="true" scroll-into-view="{{scrollIntoView}}">
+    <view wx:if="{{groups.length==0}}" class="groups-null"> 暂无联系人 </view>
     <block wx:for="{{groups}}" wx:for-item="group" wx:key="group">
       <view class="flex" id="{{group.groupName}}">
         <view class="group-name">{{group.groupName}}</view>

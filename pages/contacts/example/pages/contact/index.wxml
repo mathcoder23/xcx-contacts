@@ -1,5 +1,5 @@
-<import src="/dist/field/index.wxml" />
-<import src="/dist/toast/index.wxml" />
+<import src="../../dist/field/index.wxml" />
+<import src="../../dist/toast/index.wxml" />
 
 <!-- 直接使用 zan-toast 模板，并且直接传入 zanToast -->
 <template is="zan-toast" data="{{ zanToast }}"></template>

@@ -1,3 +1,12 @@
+
+input {
+  height: 88rpx;
+  line-height: 60rpx;
+  border: 0px;
+  padding-left: 10rpx;
+  border-radius: 5rpx;
+}
+
 /**
  * 搜索框
  */
@@ -36,7 +45,10 @@
   color: cornflowerblue !important;
 }
 
-
+.groups-null{
+  margin-top:15px;
+  text-align: center;
+}
 
 page {
   background-color: #fff;

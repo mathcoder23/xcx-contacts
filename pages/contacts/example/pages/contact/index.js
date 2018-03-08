@@ -84,20 +84,6 @@ Page(Object.assign({}, Zan.Field, Zan.Toast, {
       if(data){
         wx.navigateBack()
       }
-      bus.emit('contactsUpdateGroups', [{
-        groupName: 'A',
-        users: [
-          {
-            name: '阿码',
-            phone: '1890818181'
-          },
-          {
-            name: '阿码2',
-            phone: '1890818112'
-          }
-        ]
-      }
-      ])
     })
     
 

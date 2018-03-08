@@ -1,3 +1,11 @@
+
+input {
+  height: 88rpx;
+  line-height: 72rpx;
+  border: 0px;
+  padding-left: 10rpx;
+  border-radius: 5rpx;
+}
 .field__title--radius {
   padding-bottom: 10px;
 }
