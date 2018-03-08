@@ -23,6 +23,7 @@ Page({
     ]
   },
   onLoad:function(options){
+    console.log('a')
     //更新列表数据
     bus.on('contactsUpdateGroups',(groups)=>{
       this.setData({ ConstGroups: groups })
