@@ -1,9 +1,10 @@
-## wx_pinyin
+## 说明
 
-汉字拼音右侧导航，支持单击和滑动
+微信小程序 通讯录列表、联系人(基于youzan)编辑、新增、导入到手机通讯录。事件总线的解耦方式，代码完全解耦，引入即可使用
  
-#### touch是计算触摸点是否落在某个字母相对位置的区间范围内，为真则添加样式并改变scroll-into-view的值
 
-### 项目截图
 
-<img src="https://github.com/treadpit/wx_pinyin/blob/master/screenshot/164312br88gjgus3zdnhhl.gif" width="380px">
+### 感谢
+基于 [https://github.com/treadpit/wx_pinyin](https://github.com/treadpit/wx_pinyin)
+
+
