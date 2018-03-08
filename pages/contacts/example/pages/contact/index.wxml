@@ -1,0 +1,41 @@
+<import src="/dist/field/index.wxml" />
+<import src="/dist/toast/index.wxml" />
+
+<!-- 直接使用 zan-toast 模板，并且直接传入 zanToast -->
+<template is="zan-toast" data="{{ zanToast }}"></template>
+<view class="container">
+  <!-- <view class="doc-title zan-hairline--bottom">联系人</view> -->
+
+  
+  <!-- form 中使用 Field -->
+  <view class="zan-panel-title">信息</view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="zan-panel">
+      <template
+        is="zan-field"
+        data="{{ ...config.form.name }}"></template>
+      <template
+        is="zan-field"
+        data="{{ ...config.form.tel1}}"></template>
+      <template
+        is="zan-field"
+        data="{{ ...config.form.tel2 }}"></template>
+        <template
+        is="zan-field"
+        data="{{ ...config.form.tel3 }}"></template>
+        <template
+        is="zan-field"
+        data="{{ ...config.form.remarks,remarks }}"></template>
+      <view class="zan-btns">
+        <button
+          class="zan-btn zan-btn--primary"
+          formType="submit">保存</button>
+        <button
+          class="zan-btn zan-btn--primary"
+          bindtap="clickSaveToPhone"
+          >保存到手机</button>
+      </view>
+    </view>
+  </form>
+
+</view>

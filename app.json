@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/contacts/contacts",
+    "pages/contacts/example/pages/contact/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "字母导航栏",
+    "navigationBarTextStyle":"black"
+  }
+}
