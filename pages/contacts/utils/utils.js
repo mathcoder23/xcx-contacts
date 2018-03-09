@@ -39,6 +39,9 @@ function localSearch(groups,search){
  * 根据条件判断是否显示联系人
  */
 function isShowUser(user,search){
+  user.showTel1 = false
+  user.showTel2 = false
+  user.showTel3 = false
   if (!search.name){
     return true
   }
@@ -46,9 +49,33 @@ function isShowUser(user,search){
   if (search.name && search.name.length>0 && user.name.indexOf(search.name)>=0){
     return true
   }
-  //中文首字母匹配
-  let pyletter = py.getFirstLetter(user.name).toUpperCase()
-  if(pyletter && pyletter.length>0 && pyletter.indexOf(search.name.toUpperCase())>=0){
+  //中文全拼字母匹配
+  let pyletter = user.pingyin
+  if (pyletter && pyletter.length > 0 && pyletter.toUpperCase().indexOf(search.name.toUpperCase())>=0){
+    return true
+  }
+  //中文全拼字母匹配
+  pyletter = user.pyFirstLetter
+  if (pyletter && pyletter.length > 0 && pyletter.toUpperCase().indexOf(search.name.toUpperCase()) >= 0) {
+    return true
+  }
+  //手机号搜索
+  if(user.tel1 && user.tel1.indexOf(search.name)>=0){
+    user.showTel1 = true
+    user.showTel2 = false
+    user.showTel3 = false
+    return true
+  }
+  if (user.tel2 && user.tel2.indexOf(search.name) >= 0) {
+    user.showTel1 = false
+    user.showTel2 = true
+    user.showTel3 = false
+    return true
+  }
+  if (user.tel3 && user.tel3.indexOf(search.name) >= 0) {
+    user.showTel1 = false
+    user.showTel2 = false
+    user.showTel3 = true
     return true
   }
   return false

@@ -1,4 +1,6 @@
-
+.zan-btn--primary{
+  background-color:#28c2b5
+}
 input {
   height: 88rpx;
   line-height: 72rpx;

@@ -65,13 +65,14 @@ Page(Object.assign({}, Zan.Field, Zan.Toast, {
   formSubmit(event) {
     console.log('[zan:field:submit]', event.detail.value);
     let form = event.detail.value
-    if (!form.name || form.name.length === 0){
+    if (!form.name || form.name.length === 0 ){
       this.showZanToast({
         title: '请输入姓名',
          icon: 'fail'
       });
       return
     }
+    form.name=form.name.trim()
     console.log(form.tel1)
     if (!form.tel1 || form.tel1.length === 0) {
       this.showZanToast({
@@ -80,6 +81,28 @@ Page(Object.assign({}, Zan.Field, Zan.Toast, {
       });
       return
     }
+    //手机号格式判断
+    if (!(/^1[34578]\d{9}$/.test(form.tel1))) {
+      this.showZanToast({
+        title: '手机号1格式不正确',
+        icon: 'fail'
+      });
+      return
+    } 
+    if (form.tel2 && !(/^1[34578]\d{9}$/.test(form.tel2))) {
+      this.showZanToast({
+        title: '手机号2格式不正确',
+        icon: 'fail'
+      });
+      return
+    } 
+    if (form.tel3 &&  !(/^1[34578]\d{9}$/.test(form.tel3))) {
+      this.showZanToast({
+        title: '手机号3格式不正确',
+        icon: 'fail'
+      });
+      return
+    } 
     bus.emit('contactSubmit', this.data.contact).then(data=>{
       if(data){
         wx.navigateBack()

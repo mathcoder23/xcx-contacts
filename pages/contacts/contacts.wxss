@@ -32,6 +32,7 @@ input {
   flex-direction: row;
 }
 .wxSearch-input{
+  font-size:30rpx;
   height:40rpx;
   line-height:40rpx;
   flex: 6; 
@@ -39,10 +40,13 @@ input {
   padding: 5px 10px;
 }
 .wxSearch-button{
+  font-size:34rpx;
   flex: 1;
-  line-height: inherit;
+  line-height: 40rpx;
   border: none !important;
-  color: cornflowerblue !important;
+  color: #28c2b5 !important;
+  padding-top:20rpx;
+
 }
 
 .groups-null{
@@ -68,7 +72,7 @@ page {
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    font-size:80rpx;
+    font-size:40rpx;
 }
 
 /*从左至右*/
@@ -327,15 +331,16 @@ page {
 .group-name {
   background-color:#eee;
   padding: 10rpx 30rpx;
-  height: 70rpx;
-  line-height: 70rpx;
+  height: 29rpx;
+  line-height: 29rpx;
+  font-size:30rpx;
 }
 .group-users {
   background-color: #fff;
 }
 .user {
-  height: 150rpx;
-  line-height: 150rpx;
+  height: 100rpx;
+  line-height: 100rpx;
   padding: 0 30rpx;
   border-bottom: 1px solid #eee;
 }
