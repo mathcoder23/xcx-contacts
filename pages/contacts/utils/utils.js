@@ -48,7 +48,6 @@ function isShowUser(user,search){
   }
   //中文首字母匹配
   let pyletter = py.getFirstLetter(user.name).toUpperCase()
-  console.log(pyletter)
   if(pyletter && pyletter.length>0 && pyletter.indexOf(search.name.toUpperCase())>=0){
     return true
   }
@@ -69,7 +68,7 @@ function contactsToGroups(contacts){
     //遍历联系人组
     contacts.forEach(contact=>{
       //获取首字母
-      let indexLetter = contact.pyIndex || py.getIndex(contact.name)
+      let indexLetter = contact.pyFirst || py.getIndex(contact.name)
       let group = getObjByArrayOfKV(groups,"groupName",indexLetter)
       if (group){
         group.users.push(contact)

@@ -68,6 +68,7 @@ page {
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    font-size:80rpx;
 }
 
 /*从左至右*/
@@ -326,15 +327,15 @@ page {
 .group-name {
   background-color:#eee;
   padding: 10rpx 30rpx;
-  height: 50rpx;
-  line-height: 50rpx;
+  height: 70rpx;
+  line-height: 70rpx;
 }
 .group-users {
   background-color: #fff;
 }
 .user {
-  height: 100rpx;
-  line-height: 100rpx;
+  height: 150rpx;
+  line-height: 150rpx;
   padding: 0 30rpx;
   border-bottom: 1px solid #eee;
 }

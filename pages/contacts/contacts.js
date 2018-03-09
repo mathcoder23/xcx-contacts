@@ -14,19 +14,30 @@ Page({
     groups: [
     ]
   },
-  onLoad:function(options){
+
+  onShow: function () {
     //请求更新组列表数据
-    bus.emit('contactsUpdateGroups').then(groups=>{
-      if(groups){
+    bus.emit('contactsUpdateGroups').then(groups => {
+      if (groups) {
         this.setData({ ConstGroups: groups })
         this.setData({ groups: groups })
       }
-     
+
     })
     //请求更新联系人组数据
     bus.emit('contactsUpdateContacts').then(contacts => {
       //contacts 转换为groups
-      if (contacts){
+      if (contacts) {
+        let groups = utils.contactsToGroups(contacts)
+        this.setData({ ConstGroups: groups })
+        this.setData({ groups: groups })
+      }
+    })
+  },
+  onLoad:function(options){
+    bus.on('contactsPassiveUpdateContacts',(contacts)=>{
+      //contacts 转换为groups
+      if (contacts) {
         let groups = utils.contactsToGroups(contacts)
         this.setData({ ConstGroups: groups })
         this.setData({ groups: groups })
@@ -149,7 +160,7 @@ Page({
     let user = e.currentTarget.dataset.user
     console.log(user)
     wx.showActionSheet({
-      itemList: ['编辑', '添加到手机通讯录'],
+      itemList: ['编辑', '添加到手机通讯录','删除'],
       success: function (res) {
         if (res.tapIndex == 0) {
           // 编辑联系人
@@ -165,6 +176,8 @@ Page({
             mobilePhoneNumber: user.tel1
           })
         
+        } else if (res.tapIndex == 2) {
+          bus.emit('contactsRemoveContact', user)
         }
       }
     })
