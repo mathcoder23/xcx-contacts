@@ -82,7 +82,7 @@ Page(Object.assign({}, Zan.Field, Zan.Toast, {
       return
     }
     //手机号格式判断
-    if (!(/^1[34578]\d{9}$/.test(form.tel1))) {
+    if (!(/\d+$/.test(form.tel1))) {
       this.showZanToast({
         title: '手机号1格式不正确',
         icon: 'fail'

@@ -2,6 +2,69 @@ var eventBus = require('pages/contacts/EventBus.js')
 var Pinyin = require('utils/pinyin.js')
 var bus = eventBus.eventBus
 var contactList = []
+//取服务器数据
+function serverToSync() {
+  //检查用户信息
+  var huaqiUser = wx.getStorageSync('huaqiUser')
+  if (!huaqiUser) {
+    return
+  }
+  huaqiUser = JSON.parse(huaqiUser)
+  if (!huaqiUser.phone) {
+    return
+  }
+  //检查配置信息
+  var config = wx.getStorageSync('config')
+  if (!config || !config.baseUrl) {
+    return
+  }
+  wx.request({
+    url: config.baseUrl + '/api/contact/list',
+    method: "GET",
+    data: {
+      key: huaqiUser.phone
+    },
+    success: function (res) {
+      contactList = res.data
+      wx.setStorageSync('contactList', contactList)
+      bus.emit('contactsPassiveUpdateContacts', contactList)
+    }
+  })
+}
+//同步到服务器
+function syncToServer() {
+  //检查用户信息
+  var huaqiUser = wx.getStorageSync('huaqiUser')
+  if (!huaqiUser) {
+    return
+  }
+  huaqiUser = JSON.parse(huaqiUser)
+  if (!huaqiUser.phone) {
+    return
+  }
+  //检查配置信息
+  var config = wx.getStorageSync('config')
+  if (!config || !config.baseUrl) {
+    return
+  }
+  wx.request({
+    url: config.baseUrl + '/api/contact/saveList',
+    method: "POST",
+    data: {
+      key: huaqiUser.phone,
+      contactList: JSON.stringify(contactList)
+    },
+    header: {
+      'content-type': 'application/x-www-form-urlencoded' // 默认值
+    },
+    success: function (res) {
+      console.log(res.data)
+    }
+  })
+}
+setTimeout(() => {
+  serverToSync()
+}, 5000)
 //更新联系人列表
 bus.on('contactsUpdateContacts', () => {
   console.log('更新联系人列表')
@@ -22,7 +85,25 @@ bus.on('contactsUpdateContacts', () => {
 //点击联系人
 bus.on('contactsClicContact', (contact) => {
   console.log('点击联系人', contact)
+  var itemList = []
+  if (contact.tel1) {
+    itemList.push(contact.tel1)
+  }
+  if (contact.tel2) {
+    itemList.push(contact.tel2)
+    if (contact.tel3) {
+      itemList.push(contact.tel3)
+    }
+  }
 
+  wx.showActionSheet({
+    itemList: itemList,
+    success: function (res) {
+      var phone = itemList[res.tapIndex]
+      //呼叫号码
+      bus.emit('keypadCallPhone', phone)
+    }
+  })
 })
 
 //保存联系人
@@ -40,7 +121,7 @@ bus.on('contactSubmit', (contact) => {
     if (i == 0) {
       //第一个字符
       if (py.type != 2 && py.type != 1) {
-        //不为中文,或字母
+        //不为中文
         pyFirst = '#'
 
       } else {
@@ -61,9 +142,8 @@ bus.on('contactSubmit', (contact) => {
 
   //id存在更新值
   if (contact.id) {
-    if (contact.id <= contactList.length) {
-      contactList[contact.id - 1] = contact
-    }
+    let index = getObjIndexByArrayOfKV(contactList, "id", contact.id)
+    contactList[index] = contact
 
   } else {
     //新增
@@ -76,6 +156,7 @@ bus.on('contactSubmit', (contact) => {
     contactList.push(contact)
   }
   wx.setStorageSync('contactList', contactList)
+  syncToServer()//保存到服务器
   return new Promise((resolve, reject) => {
     resolve(contact)
   })
@@ -85,7 +166,34 @@ bus.on('contactSubmit', (contact) => {
 //删除联系人
 bus.on('contactsRemoveContact', (contact) => {
   console.log('删除联系人', contact)
-  contactList.splice(contact.id - 1, 1)
+
+  let index = getObjIndexByArrayOfKV(contactList, "id", contact.id)
+  console.log(index)
+  contactList.splice(index, 1)
   wx.setStorageSync('contactList', contactList)
+  syncToServer()//保存到服务器
   bus.emit('contactsPassiveUpdateContacts', contactList)
 })
+//对象数组，通过对象中的k-v值来返回匹配的第一个对象
+function getObjIndexByArrayOfKV(array, key, value) {
+  let obj = null
+  let i = 0
+  if ("object" === typeof (array)) {
+
+    array.every(item => {
+
+      if ("object" === typeof item) {
+        if ("undefined" !== typeof item[key]) {
+          console.log(item[key], value)
+          if (item[key] == value) {
+            obj = item
+            return false
+          }
+        }
+      }
+      i++
+      return true
+    })
+  }
+  return i
+}
