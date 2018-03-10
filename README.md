@@ -42,8 +42,11 @@ App({
 
 
 
-
-
+# 图片
+<img src="https://github.com/mathcoder23/xcx-contacts/blob/master/screenshot/1.png" width="380px">
+<img src="https://github.com/mathcoder23/xcx-contacts/blob/master/screenshot/2.png" width="380px">
+<img src="https://github.com/mathcoder23/xcx-contacts/blob/master/screenshot/3.png" width="380px">
+<img src="https://github.com/mathcoder23/xcx-contacts/blob/master/screenshot/4.png" width="380px">
 # 感谢
 基于 [https://github.com/treadpit/wx_pinyin](https://github.com/treadpit/wx_pinyin)
 
